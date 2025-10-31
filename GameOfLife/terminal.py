@@ -2,47 +2,51 @@ import os
 from time import sleep
 from random import random
 
-[columns, rows] = os.get_terminal_size()
+# [columns, rows] = os.get_terminal_size()
+# alive = "\u2588"  # "#"
+# dead = " "
+alive = 1
+dead = 0
 
 
-# create the matrix
-def createMatrix():
+def create_matrix(columns=10, rows=10):
     matrix = []
-    for x in range(rows):
-        col = []
-        for y in range(columns):
-            col.append("1" if random() > 0.9 else "0")
-        matrix.append(col)
+    for row in range(rows):
+        ligne = []
+        for colum in range(columns):
+            ligne.append(alive if random() < 0.3 else dead)
+        matrix.append(ligne)
     return matrix
 
 
-def isAlive(x, y, matrix):
+def is_alive(x, y, matrix):
     voisinsAlive = 0
-    for row in range(-1, 2):
+    for row in (-1, 0, 1):
         for column in range(-1, 2):
             if row or column:
                 if (
                     x + row >= 0
-                    and x + row < rows
-                    and y + column < columns
+                    and x + row < len(matrix)
+                    and y + column < len(matrix[row])
                     and y + column >= 0
                 ):
-                    if matrix[x + row][y + column] == "1":
+                    if matrix[x + row][y + column] == alive:
+                        print(x + row, y + column)
                         voisinsAlive = voisinsAlive + 1
-    return voisinsAlive == 2
+    return voisinsAlive == 3
 
 
-def rebuildMatrix(matrix):
+def rebuild_matrix(matrix):
     newMatrix = []
-    for i, col in enumerate(matrix):
-        newCol = []
-        for j, row in enumerate(col):
-            newCol.append("1" if isAlive(i, j, matrix) else "0")
-        newMatrix.append(newCol)
+    for i, row in enumerate(matrix):
+        newRow = []
+        for j, column in enumerate(row):
+            newRow.append(alive if is_alive(i, j, matrix) else dead)
+        newMatrix.append(newRow)
     return newMatrix
 
 
-def printMatrix(matrix):
+def print_matrix(matrix):
     for i, col in enumerate(matrix):
         for j, row in enumerate(col):
             print(matrix[i][j], end="")
@@ -50,15 +54,20 @@ def printMatrix(matrix):
 
 def draw():
     temps = 0
-    matrix = createMatrix()
+    try:
+        [columns, rows] = os.get_terminal_size()
+    except Exception:
+        [columns, rows] = [10, 10]
+    matrix = create_matrix(rows=rows, columns=columns)
     print(chr(27) + "[2J")  # clear screen
-    while temps < 10:
+    while temps < 30:
         print(chr(27) + "[H")  # move to (0,0)
-        # print(chr(27) + "[5;2f", end="")  # move to (5,2)
-        printMatrix(matrix)
-        matrix = rebuildMatrix(matrix)
+        print_matrix(matrix)
+        matrix = rebuild_matrix(matrix)
         temps = temps + 1
         sleep(1)
 
 
-draw()
+# draw()
+matrix = [[0, 1, 0], [1, 1, 1], [0, 0, 1]]
+is_alive(1, 1, matrix)

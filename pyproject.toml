@@ -10,7 +10,9 @@ dependencies=[
 ]
 
 [project.optional-dependencies]
-dev=[]
+dev=[
+    "pytest"
+]
 
 [project.scripts]
 yourname = "GameOfLife:main"
@@ -18,3 +20,9 @@ yourname = "GameOfLife:main"
 [build-system]
 requires = ["setuptools >= 80.9.0"]
 build-backend = "setuptools.build_meta"
+
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
