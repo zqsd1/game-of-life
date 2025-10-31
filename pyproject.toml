@@ -1,0 +1,20 @@
+[project]
+name="game-of-life"
+version="1.0.0"
+requires-python = ">= 3.12"
+description = "game of life in terminal with python"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+
+dependencies=[
+]
+
+[project.optional-dependencies]
+dev=[]
+
+[project.scripts]
+yourname = "GameOfLife:main"
+
+[build-system]
+requires = ["setuptools >= 80.9.0"]
+build-backend = "setuptools.build_meta"
