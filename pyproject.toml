@@ -26,3 +26,6 @@ build-backend = "setuptools.build_meta"
 addopts = [
     "--import-mode=importlib",
 ]
+
+[tool.ruff.lint]
+select = ["E", "F","B","A"]
