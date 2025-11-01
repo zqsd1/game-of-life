@@ -1,11 +1,24 @@
-def yourname():
-    print("what is your name ?")
-    name = input()
-    print(f"your name is {name}")
+import os
+from time import sleep
+from GameOfLife.matrix import create_matrix, rebuild_matrix, print_matrix
 
 
 def main():
-    print("hello")
+    try:
+        [columns, rows] = os.get_terminal_size()
+    except Exception:
+        [columns, rows] = [10, 10]
+
+    matrix = create_matrix(rows=rows, columns=columns, alive_percent=10)
+    print(chr(27) + "[2J")  # clear screen
+    try:
+        while True:
+            print(chr(27) + "[H")  # move to (0,0)
+            print_matrix(matrix, alive_char="#")
+            matrix = rebuild_matrix(matrix)
+            sleep(0.5)
+    except Exception:
+        pass
 
 
 if __name__ == "__main__":

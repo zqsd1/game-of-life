@@ -15,7 +15,7 @@ dev=[
 ]
 
 [project.scripts]
-yourname = "GameOfLife:main"
+gol = "GameOfLife.main:main"
 
 [build-system]
 requires = ["setuptools >= 80.9.0"]
