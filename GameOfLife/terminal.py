@@ -5,21 +5,23 @@ from random import random
 # [columns, rows] = os.get_terminal_size()
 # alive = "\u2588"  # "#"
 # dead = " "
-alive = 1
-dead = 0
 
 
-def create_matrix(columns=10, rows=10):
+def create_matrix(rows=10, columns=10, alive_percent=30):
     matrix = []
     for row in range(rows):
         ligne = []
         for colum in range(columns):
-            ligne.append(alive if random() < 0.3 else dead)
+            ligne.append(random() < (alive_percent / 100))
         matrix.append(ligne)
     return matrix
 
 
 def is_alive(x, y, matrix):
+    """
+    dead cell become alive if voisin ==3
+    alive cell survive if voisin ==3 or voisin ==2
+    """
     voisinsAlive = 0
     for row in (-1, 0, 1):
         for column in range(-1, 2):
@@ -30,10 +32,9 @@ def is_alive(x, y, matrix):
                     and y + column < len(matrix[row])
                     and y + column >= 0
                 ):
-                    if matrix[x + row][y + column] == alive:
-                        print(x + row, y + column)
+                    if matrix[x + row][y + column]:
                         voisinsAlive = voisinsAlive + 1
-    return voisinsAlive == 3
+    return voisinsAlive == 3 or matrix[x][y] and voisinsAlive == 2
 
 
 def rebuild_matrix(matrix):
@@ -41,15 +42,15 @@ def rebuild_matrix(matrix):
     for i, row in enumerate(matrix):
         newRow = []
         for j, column in enumerate(row):
-            newRow.append(alive if is_alive(i, j, matrix) else dead)
+            newRow.append(is_alive(i, j, matrix))
         newMatrix.append(newRow)
     return newMatrix
 
 
-def print_matrix(matrix):
+def print_matrix(matrix, alive_char="\u2588", dead_char=" "):
     for i, col in enumerate(matrix):
         for j, row in enumerate(col):
-            print(matrix[i][j], end="")
+            print(alive_char if matrix[i][j] else dead_char, end="")
 
 
 def draw():
@@ -58,16 +59,14 @@ def draw():
         [columns, rows] = os.get_terminal_size()
     except Exception:
         [columns, rows] = [10, 10]
-    matrix = create_matrix(rows=rows, columns=columns)
+    matrix = create_matrix(rows=rows, columns=columns, alive_percent=10)
     print(chr(27) + "[2J")  # clear screen
     while temps < 30:
         print(chr(27) + "[H")  # move to (0,0)
-        print_matrix(matrix)
+        print_matrix(matrix, alive_char="#")
         matrix = rebuild_matrix(matrix)
         temps = temps + 1
         sleep(1)
 
 
-# draw()
-matrix = [[0, 1, 0], [1, 1, 1], [0, 0, 1]]
-is_alive(1, 1, matrix)
+draw()
