@@ -9,7 +9,7 @@ def main():
     except Exception:
         [columns, rows] = [10, 10]
 
-    matrix = create_matrix(rows=rows, columns=columns, alive_percent=10)
+    matrix = create_matrix(rows=rows, columns=columns, alive_percent=25)
     print(chr(27) + "[2J")  # clear screen
     try:
         while True:

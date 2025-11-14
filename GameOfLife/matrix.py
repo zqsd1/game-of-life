@@ -1,6 +1,9 @@
 from random import random
 
-def create_matrix(rows=10, columns=10, alive_percent=30):
+type Matrix = list[list[bool]]
+
+
+def create_matrix(rows=10, columns=10, alive_percent=30) -> Matrix:
     matrix = []
     for row in range(rows):
         ligne = []
@@ -10,7 +13,7 @@ def create_matrix(rows=10, columns=10, alive_percent=30):
     return matrix
 
 
-def is_alive(x, y, matrix):
+def is_alive(x: int, y: int, matrix: Matrix) -> bool:
     """
     dead cell become alive if voisin ==3
     alive cell survive if voisin ==3 or voisin ==2
@@ -30,7 +33,7 @@ def is_alive(x, y, matrix):
     return voisinsAlive == 3 or matrix[x][y] and voisinsAlive == 2
 
 
-def rebuild_matrix(matrix):
+def rebuild_matrix(matrix: Matrix) -> Matrix:
     newMatrix = []
     for i, row in enumerate(matrix):
         newRow = []
@@ -40,7 +43,7 @@ def rebuild_matrix(matrix):
     return newMatrix
 
 
-def print_matrix(matrix, alive_char="\u2588", dead_char=" "):
+def print_matrix(matrix: Matrix, alive_char="\u2588", dead_char=" "):
     for i, col in enumerate(matrix):
         for j, row in enumerate(col):
             print(alive_char if matrix[i][j] else dead_char, end="")
