@@ -1,5 +1,5 @@
 [project]
-name="game-of-life"
+name="game_of_life"
 version="1.0.0"
 requires-python = ">= 3.12"
 description = "game of life in terminal with python"
@@ -15,7 +15,7 @@ dev=[
 ]
 
 [project.scripts]
-gol = "GameOfLife.main:main"
+gol = "game_of_life.main:main"
 
 [build-system]
 requires = ["setuptools >= 80.9.0"]
@@ -28,4 +28,4 @@ addopts = [
 ]
 
 [tool.ruff.lint]
-select = ["E", "F","B","A"]
+select = ["E", "F", "B","A","Q","UP","N","C4"]

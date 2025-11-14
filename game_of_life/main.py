@@ -1,6 +1,6 @@
 import os
 from time import sleep
-from GameOfLife.matrix import create_matrix, rebuild_matrix, print_matrix
+from game_of_life.matrix import create_matrix, rebuild_matrix, print_matrix
 
 
 def main():
