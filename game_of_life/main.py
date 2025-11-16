@@ -11,14 +11,12 @@ def main():
 
     matrix = create_matrix(rows=rows, columns=columns, alive_percent=25)
     print(chr(27) + "[2J")  # clear screen
-    try:
-        while True:
-            print(chr(27) + "[H")  # move to (0,0)
-            print_matrix(matrix, alive_char="#")
-            matrix = rebuild_matrix(matrix)
-            sleep(0.5)
-    except Exception:
-        pass
+
+    while True:
+        print(chr(27) + "[H")  # move to (0,0)
+        print_matrix(matrix, alive_char="#")
+        matrix = rebuild_matrix(matrix)
+        sleep(0.5)
 
 
 if __name__ == "__main__":
