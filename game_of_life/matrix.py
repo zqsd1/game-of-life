@@ -4,6 +4,10 @@ type Matrix = list[list[bool]]
 
 
 def create_matrix(rows=10, columns=10, alive_percent=30) -> Matrix:
+    """
+    create a 2D array of bool
+    with a percentage of true cell equal to alive_percent
+    """
     matrix = []
     for _row in range(rows):
         ligne = []
@@ -15,21 +19,19 @@ def create_matrix(rows=10, columns=10, alive_percent=30) -> Matrix:
 
 def is_alive(x: int, y: int, matrix: Matrix) -> bool:
     """
-    dead cell become alive if voisin ==3
-    alive cell survive if voisin ==3 or voisin ==2
+    dead cell become alive if voisin alive ==3
+    alive cell survive if voisin alive ==3 or voisin alive ==2
     """
     voisins_alive = 0
     for row in (-1, 0, 1):
         for column in range(-1, 2):
-            if row or column:
-                if (
-                    x + row >= 0
-                    and x + row < len(matrix)
-                    and y + column < len(matrix[row])
-                    and y + column >= 0
-                ):
-                    if matrix[x + row][y + column]:
-                        voisins_alive = voisins_alive + 1
+            if row or column:  # ignore la case actuelle 0,0
+                continue
+            if 0 <= x + row < len(matrix) and 0 <= y + column < len(
+                matrix[row]
+            ):  # pour les bordure
+                if matrix[x + row][y + column]:
+                    voisins_alive += 1
     return voisins_alive == 3 or matrix[x][y] and voisins_alive == 2
 
 
