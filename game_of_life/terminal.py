@@ -1,12 +1,9 @@
 import argparse
-import os
-from game_of_life.matrix import create_matrix, print_matrix, rebuild_matrix
-from time import sleep
+from game_of_life.main import main as game
 
 
 def main():
     parser = argparse.ArgumentParser(
-        prog="gol",
         description="play the game of life insde the terminal",
     )
 
@@ -23,16 +20,7 @@ def main():
 
     args = parser.parse_args()
 
-    [columns, rows] = os.get_terminal_size()
-
-    matrix = create_matrix(rows=rows, columns=columns, alive_percent=args.percent)
-    print(chr(27) + "[2J")  # clear screen
-
-    while True:
-        print(chr(27) + "[H")  # move to (0,0)
-        print_matrix(matrix, alive_char=args.alive)
-        matrix = rebuild_matrix(matrix)
-        sleep(0.5)
+    game(alive_percent=args.percent, alive_char=args.alive)
 
 
 if __name__ == "__main__":
