@@ -1,4 +1,4 @@
-from game_of_life.terminal import is_alive, create_matrix, rebuild_matrix
+from game_of_life.matrix import is_alive, create_matrix, rebuild_matrix
 
 
 def test_is_dead():
