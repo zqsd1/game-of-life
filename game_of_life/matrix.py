@@ -25,7 +25,7 @@ def is_alive(x: int, y: int, matrix: Matrix) -> bool:
     voisins_alive = 0
     for row in (-1, 0, 1):
         for column in range(-1, 2):
-            if row or column:  # ignore la case actuelle 0,0
+            if not row and not column:  # ignore la case actuelle 0,0
                 continue
             if (  # pour les bordure
                 0 <= x + row < len(matrix) and 0 <= y + column < len(matrix[row])
