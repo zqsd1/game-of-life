@@ -27,11 +27,10 @@ def is_alive(x: int, y: int, matrix: Matrix) -> bool:
         for column in range(-1, 2):
             if row or column:  # ignore la case actuelle 0,0
                 continue
-            if 0 <= x + row < len(matrix) and 0 <= y + column < len(
-                matrix[row]
-            ):  # pour les bordure
-                if matrix[x + row][y + column]:
-                    voisins_alive += 1
+            if (  # pour les bordure
+                0 <= x + row < len(matrix) and 0 <= y + column < len(matrix[row])
+            ) and (matrix[x + row][y + column]):
+                voisins_alive += 1
     return voisins_alive == 3 or matrix[x][y] and voisins_alive == 2
 
 
